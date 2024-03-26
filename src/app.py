@@ -1,9 +1,8 @@
 import streamlit as st
 from tabs.dalle3 import dalle3
 
-
 def main():
-    tabs = st.tabs(["DALLE", "Browsing"])
+    tabs = st.tabs(["DALL-E3", "Browsing"])
 
     with tabs[0]:
         dalle3()
