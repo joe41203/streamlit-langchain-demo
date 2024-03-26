@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 def main():
     tabs = st.tabs(["DALL-E3", "Browsing"])
 
@@ -8,6 +9,7 @@ def main():
 
     with tabs[1]:
         st.header("Browsing")
+
 
 if __name__ == "__main__":
     main()
