@@ -1,7 +1,10 @@
 import streamlit as st
 import settings
 from openai import OpenAI
-
+import requests
+from io import BytesIO
+from PIL import Image
+import uuid
 
 def dalle3():
     st.header("DALL-E3")
@@ -18,4 +21,22 @@ def dalle3():
                 n=1,
             )
             image_url = response.data[0].url
-        st.image(image_url, caption="生成された画像", use_column_width=True)
+
+            # 画像をダウンロードして表示
+            response = requests.get(image_url)
+            image = Image.open(BytesIO(response.content))
+            st.image(image, caption="生成された画像", use_column_width=True)
+
+            # ランダムなファイル名を生成
+            random_filename = str(uuid.uuid4()) + ".webp"
+
+            # 画像を圧縮してWebP形式で保存
+            webp_buffer = BytesIO()
+            image.save(webp_buffer, format="WebP", quality=10)
+            webp_buffer.seek(0)
+            st.download_button(
+                label="画像をダウンロード",
+                data=webp_buffer,
+                file_name=random_filename,
+                mime="image/webp",
+            )
